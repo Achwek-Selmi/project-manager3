@@ -1,19 +1,32 @@
 <div class="mt-2 space-y-2">
 
-  @if (tasks.length === 0) {
+  @if (filteredTasks.length === 0) {
     <p class="text-gray-400 italic">Aucune tâche</p>
   } @else {
-    @for (task of tasks; track task.title) {
+    @for (task of filteredTasks; track task.title) {
       <div
-        class="border-l-4 pl-3 py-2 rounded"
+        class="border-l-4 pl-3 py-2 rounded flex justify-between items-start"
         [appHighlightStatus]="task.status">
+        <div>
+          <p class="font-medium" [class]="task.priority | priorityColor">
+            {{ task.title }}
+          </p>
+          <p class="text-sm text-gray-500">Priorité : {{ task.priority }}</p>
+          <p class="text-sm text-gray-500">{{ task.status | statusEmoji }}</p>
+        </div>
 
-        <!-- titre avec couleur selon priorité -->
-        <p class="font-medium" [class]="task.priority | priorityColor">
-          {{ task.title }}
-        </p>
-        <p class="text-sm text-gray-500">Priorité : {{ task.priority }}</p>
-        <p class="text-sm text-gray-500">Statut : {{ task.status }}</p>
+        <div class="flex flex-col gap-1">
+          <button
+            (click)="changerStatut(task)"
+            class="px-2 py-1 bg-orange-400 text-white text-xs rounded hover:bg-orange-500">
+            Changer statut
+          </button>
+          <button
+            (click)="onSupprimer(task)"
+            class="px-2 py-1 bg-red-500 text-white text-xs rounded hover:bg-red-600">
+            Supprimer
+          </button>
+        </div>
       </div>
     }
   }

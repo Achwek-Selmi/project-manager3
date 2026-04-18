@@ -2,8 +2,13 @@
 
   <h2 class="text-2xl font-bold text-blue-700">{{ project.name }}</h2>
   <p class="text-gray-700">{{ project.description }}</p>
-  <p class="text-sm text-gray-500">Statut : {{ project.status }}</p>
-  <p class="text-sm text-gray-500">Créé le : {{ project.createdAt | date:'dd/MM/yyyy' }}</p>
+
+  <!-- Badge de statut -->
+  <div class="mt-2">
+    <app-status-badge [status]="project.status"></app-status-badge>
+  </div>
+
+<p class="text-sm text-gray-500 mt-1">Créé le : {{ project.createdAt | friendlyDate }}</p>
 
   <!-- Barre de progression -->
   <div class="mt-3">
@@ -12,12 +17,16 @@
     </p>
     <div class="w-full bg-gray-200 rounded-full h-3 mt-1">
       <div
-        class="bg-blue-500 h-3 rounded-full"
+        class="bg-blue-500 h-3 rounded-full transition-all duration-500"
         [style.width.%]="getProgress()">
       </div>
     </div>
   </div>
 
-  <app-task-list [tasks]="project.tasks"></app-task-list>
+  <app-task-list
+    [tasks]="project.tasks"
+    (statusChanged)="onStatusChanged($event)"
+    (supprimerTache)="supprimerTache($event)">
+  </app-task-list>
 
 </div>

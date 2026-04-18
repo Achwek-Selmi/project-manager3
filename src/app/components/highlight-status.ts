@@ -1,16 +1,26 @@
-import { Directive, Input, ElementRef, OnInit } from '@angular/core';
+import { Directive, Input, ElementRef, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
 @Directive({
   selector: '[appHighlightStatus]',
   standalone: true
 })
-export class HighlightStatus implements OnInit {
+export class HighlightStatus implements OnInit, OnChanges {
 
   @Input() appHighlightStatus: string = '';
 
   constructor(private el: ElementRef) {}
 
   ngOnInit() {
+    this.appliquerCouleur();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['appHighlightStatus']) {
+      this.appliquerCouleur();
+    }
+  }
+
+  appliquerCouleur() {
     switch (this.appHighlightStatus) {
       case 'Terminé':
         this.el.nativeElement.style.backgroundColor = '#dcfce7';

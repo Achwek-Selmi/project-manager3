@@ -1,3 +1,16 @@
-<div class="p-4">
-  <app-project-list></app-project-list>
+<div [class]="isDarkMode ? 'min-h-screen bg-gray-900 text-white' : 'min-h-screen bg-gray-100 text-gray-900'">
+
+  <!-- Bouton dark mode -->
+  <div class="flex justify-end p-4">
+    <button
+      (click)="toggleDarkMode()"
+      [class]="isDarkMode ?
+        'px-4 py-2 bg-yellow-400 text-gray-900 rounded hover:bg-yellow-300' :
+        'px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700'">
+      {{ isDarkMode ? '☀️ Mode clair' : '🌙 Mode sombre' }}
+    </button>
+  </div>
+
+  <app-project-list [isDarkMode]="isDarkMode"></app-project-list>
+
 </div>
